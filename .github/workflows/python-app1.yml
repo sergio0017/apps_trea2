@@ -2,7 +2,7 @@ name: Python apps26
 
 on:
   push:
-    branches: ["main, MASTER"]
+    branches: ["master"]
 
 permissions:
   contents: read
