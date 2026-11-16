@@ -1,0 +1,26 @@
+name: DevSecOps Pipeline
+on:
+push:
+branches: [ main, master ]
+pull_request:
+branches: [ main, master ]
+jobs:
+sast-semgrep:
+name: "SAST - Semgrep Code Scanning"
+runs-on: ubuntu-latest
+steps:
+- name: Checkout del código
+uses: actions/checkout@v4
+- name: Ejecutar Semgrep
+uses: semgrep/semgrep-action@v1
+with:
+config: >-
+p/security-audit
+p/owasp-top-ten generateSarif: "semgrepresults.
+sarif"
+- name: Subir artefacto SARIF de Semgrep
+uses: actions/upload-artifact@v4
+if: always()
+with:
+name: semgrep-sarif-report
+path: semgrep-results.sarif
